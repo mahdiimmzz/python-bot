@@ -5,10 +5,10 @@ import telebot
 ##TOKEN DETAILS
 TOKEN = "TRON"
 
-BOT_TOKEN = "7167163285:AAEV9_ajMB0F0el9QHjIRI14XrboJ-XK4zY"
-PAYMENT_CHANNEL = "@tronpaymenthh" #add payment channel here including the '@' sign
+BOT_TOKEN = "7022031297:AAFVPLiHr2vrprd8QTf9Dv-dt74MTX_CwC4"
+PAYMENT_CHANNEL = "@DropTron1" #add payment channel here including the '@' sign
 OWNER_ID = 316683969 #write owner's user id here.. get it from @MissRose_Bot by /id
-CHANNELS = ["@tronpaymenthh"] #add channels to be checked here in the format - ["Channel 1", "Channel 2"] 
+CHANNELS = ["@freetelegrampermium" , "@DropTron1" , "@adultclube" , "@atosaasorati" , "@bruhmusic2024"] #add channels to be checked here in the format - ["Channel 1", "Channel 2"] 
               #you can add as many channels here and also add the '@' sign before channel username
 Daily_bonus = 0.5 #Put daily bonus amount here!
 Mini_Withdraw = 0.6  #remove 0 and add the minimum withdraw u want to set
@@ -28,10 +28,10 @@ bonus = {}
 
 def menu(id):
     keyboard = telebot.types.ReplyKeyboardMarkup(True)
-    keyboard.row('🆔 Account')
+    keyboard.row('💲Balance')
     keyboard.row('🙌🏻 Referrals', '🎁 Bonus', '💸 Withdraw')
-    keyboard.row('⚙️ Set Wallet', '📊Statistics')
-    bot.send_message(id, "*🏡 Home*", parse_mode="Markdown",
+    keyboard.row('⚙️ Set Wallet', "💢Task" ,'📊Statistics')
+    bot.send_message(id, "*🏡 Menu*", parse_mode="Markdown",
                      reply_markup=keyboard)
 
 @bot.message_handler(commands=['start'])
@@ -64,7 +64,7 @@ def start(message):
         markup = telebot.types.InlineKeyboardMarkup()
         markup.add(telebot.types.InlineKeyboardButton(
            text='🤼‍♂️ Joined', callback_data='check'))
-        msg_start = "*🍔 To Use This Bot You Need To Join This Channel - "
+        msg_start = "*🌐 To Use This Bot You Need To Join This Channel - "
         for i in CHANNELS:
             msg_start += f"\n➡️ {i}\n"
         msg_start += "*"
@@ -98,7 +98,7 @@ def start(message):
         markups = telebot.types.InlineKeyboardMarkup()
         markups.add(telebot.types.InlineKeyboardButton(
             text='🤼‍♂️ Joined', callback_data='check'))
-        msg_start = "*🍔 To Use This Bot You Need To Join This Channel - \n➡️ @ Fill your channels at line: 101 and 157*"
+        msg_start = "*🌐 To Use This Bot You Need To Join This Channel - \n➡️ @freetelegrampermium \n➡️ @adultclube \n➡️ @atosaasorati \n➡️ @bruhmusic2024 *"
         bot.send_message(user, msg_start,
                          parse_mode="Markdown", reply_markup=markups)
    except:
@@ -116,7 +116,7 @@ def query_handler(call):
             user_id = call.message.chat.id
             user = str(user_id)
             bot.answer_callback_query(
-                callback_query_id=call.id, text='✅ You joined Now yu can earn money')
+                callback_query_id=call.id, text='✅ You joined Now you can earn money')
             bot.delete_message(call.message.chat.id, call.message.message_id)
             if user not in data['refer']:
                 data['refer'][user] = True
@@ -154,7 +154,7 @@ def query_handler(call):
             markup = telebot.types.InlineKeyboardMarkup()
             markup.add(telebot.types.InlineKeyboardButton(
                 text='🤼‍♂️ Joined', callback_data='check'))
-            msg_start = "*🍔 To Use This Bot You Need To Join This Channel - \n➡️ @ Fill your channels at line: 101 and 157*"
+            msg_start = "*🌐 To Use This Bot You Need To Join This Channel - \n➡️ @freetelegrampermium \n➡️ @adultclube \n➡️ @atosaasorati \n➡️ @bruhmusic2024*"
             bot.send_message(call.message.chat.id, msg_start,
                              parse_mode="Markdown", reply_markup=markup)
    except:
@@ -165,7 +165,7 @@ def query_handler(call):
 @bot.message_handler(content_types=['text'])
 def send_text(message):
    try:
-    if message.text == '🆔 Account':
+    if message.text == '💲Balance':
         data = json.load(open('users.json', 'r'))
         accmsg = '*👮 User : {}\n\n⚙️ Wallet : *`{}`*\n\n💸 Balance : *`{}`* {}*'
         user_id = message.chat.id
@@ -219,7 +219,7 @@ def send_text(message):
         if (user_id not in bonus.keys()) or (cur_time - bonus[user_id] > 60*60*24):
             data['balance'][(user)] += Daily_bonus
             bot.send_message(
-                user_id, f"Congrats you just received {Daily_bonus} {TOKEN}")
+                user_id, f"Congrats you just received {Daily_bonus} {TOKEN}!")
             bonus[user_id] = cur_time
             json.dump(data, open('users.json', 'w'))
         else:
@@ -235,6 +235,23 @@ def send_text(message):
         msg = msg.format(data['total'], data['totalwith'], TOKEN)
         bot.send_message(user_id, msg, parse_mode="Markdown")
         return
+    if message.text == "💢Task":
+        data = json.load(open('users.json', 'r'))
+        ref_msg = "* 🔅 Invite more friens to get more 🎁 Bonus*\n *10 user = 5 TRX* \n *15 user = 8 TRX* \n *20 user = 25 TRX* \n *⏯️ Total Invites : {} Users\n\n👥 Refferrals System\n\n1 Level:\n🥇 Level°1 - {} {}\n\n🔗 Referral Link ⬇️\n{}*"
+
+        bot_name = bot.get_me().username
+        user_id = message.chat.id
+        user = str(user_id)
+
+        if user not in data['referred']:
+            data['referred'][user] = 0
+        json.dump(data, open('users.json', 'w'))
+
+        ref_count = data['referred'][user]
+        ref_link = 'https://telegram.me/{}?start={}'.format(
+            bot_name, message.chat.id)
+        msg = ref_msg.format(ref_count, Per_Refer, TOKEN, ref_link)
+        bot.send_message(message.chat.id, msg, parse_mode="Markdown")
 
     if message.text == "💸 Withdraw":
         user_id = message.chat.id
